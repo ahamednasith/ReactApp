@@ -2,6 +2,7 @@ const db = require('../models/index');
 const { Sequelize,Op } = require('sequelize');
 const dateTime = require('date-and-time');
 const {encrypt,decrypt,generateToken} = require('../utils/cryptAndJwt');
+const {removeOtp} = require('../utils/cron');
 const Contact = db.contact;
 const User = db.user;
 
@@ -35,7 +36,7 @@ const verify = async (req,res) => {
     const currentTime = new Date();
     const contact = await Contact.findOne({
         where:{
-            //phoneNumber,
+            phoneNumber,
             otp,
             expiredAt:{
                 [Op.gt]:currentTime

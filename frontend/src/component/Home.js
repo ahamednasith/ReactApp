@@ -2,16 +2,11 @@ import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-function Home() {
-    const [phoneNumber,setPhoneNumber] = useState('');
+function Home({phoneNumber}) {
     const [name,setName] = useState('');
     const [age,setAge] = useState('');
     const [email,setEmail] = useState('');
     const validateForm = async () => {
-        if (!phoneNumber) {
-            toast.error('Phone Number is required');
-            return false;
-        }   
         if(!name){
             toast.error('Name is Required');
             return false;
@@ -47,10 +42,6 @@ function Home() {
                 <h1><strong><center>INFORMATION</center></strong></h1>
                 <br></br>
                 <form action="" onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="phoneNumber" className="text-dark "><strong>Phone Number:</strong></label>
-                        <input type="text" name="phoneNumber" placeholder="Enter Your Phone Number" onChange={(e)=>setPhoneNumber(e.target.value)} className="form-control rounded-3"></input>
-                    </div>
                     <div className="mb-3">
                         <label htmlFor="name" className="text-success"><strong>Name:</strong></label>
                         <input type="text" name="name" placeholder="Enter Your Name" onChange={(e)=>setName(e.target.value)} className="form-control rounded-3"></input>

@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 
-function Login() {
+function Login({phoneNumber}) {
     const [otp,setOtp] = useState('');
     const navigate = useNavigate();
     const validateForm = async () => {
@@ -19,7 +19,7 @@ function Login() {
         e.preventDefault();
         const isValid = await validateForm();
         if(isValid){
-            axios.post('http://localhost:6733/verify',{otp})
+            axios.post('http://localhost:6733/verify',{phoneNumber,otp})
             .then(res=>{
                 if(res.data){
                     toast.success("OTP Verified Successfully",{position:'top-center'})

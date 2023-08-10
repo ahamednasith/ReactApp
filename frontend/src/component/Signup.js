@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -8,8 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 
-function Signup () {
-    const [phoneNumber, setPhoneNumber] = useState('');
+function Signup({phoneNumber,setPhoneNumber}) {
     const navigate = useNavigate();
     const validateForm = async () => {
         if (!phoneNumber) {
@@ -26,6 +25,7 @@ function Signup () {
             .then(res =>{
                 if(res.data){
                     toast.success('OTP Generated',{position:'top-center',theme:'light'});
+                    setPhoneNumber(phoneNumber);
                     navigate('/login')
                 } else {
                     toast.error(res.data.message,{position:"top-center",theme:'light'});
