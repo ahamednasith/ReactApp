@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
+import axios from 'axios'
 
 
 function Login({phoneNumber}) {
@@ -23,7 +23,15 @@ function Login({phoneNumber}) {
             .then(res=>{
                 if(res.data){
                     toast.success("OTP Verified Successfully",{position:'top-center'})
-                    navigate('/home');
+                    function getProfile(){
+                        navigate('/home');
+                    }
+                    function setProfile(){
+                        navigate('/profile');
+                    }
+                    let authenticated = true;
+                    authenticated ? getProfile() : setProfile()
+
                 }
                 else{
                     toast.error("OTP Has Expired",{position:'top-center'})

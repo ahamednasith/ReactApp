@@ -15,6 +15,9 @@ module.exports = (sequelize,DataTypes) => {
         email:{
             type: DataTypes.STRING
         },
+        picture:{
+            type: DataTypes.STRING
+        },
         signUpDate:{
             type: DataTypes.DATE
         },

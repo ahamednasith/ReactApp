@@ -10,7 +10,7 @@ const generateToken = (userId,loginDate) => {
 };
 
 const verifyToken = async(req,res,next) => {
-    let token = req.headers['x-access-token'];
+    let token = req.headers['Authorization'];
     if(token){
         tokenPart = token.split(" ");
         token = tokenPart[1];
@@ -19,10 +19,11 @@ const verifyToken = async(req,res,next) => {
         const user = await User.findOne({where:{userId:userId}});
         if(user){
             const date = user.loginDate;
-            const loginDate = moment(date).format('YYYY-MM-DD HH:mm;ss');
+            const loginDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
+            console.log(loginDate);
             jwt.verify(token,loginDate,(err) => {
                 if(err){
-                    return res.stauts(402).json({stautscode:402,message:"UnAuthorized"});
+                    return res.status(402).json({stautscode:402,message:"UnAuthorized",err});
                 }
                 req.user=user;
                 next();

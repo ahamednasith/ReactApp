@@ -9,6 +9,4 @@ router.post('/signup',joi.phoneValidate,userController.signUp);
 
 router.post('/verify',joi.contactValidate,userController.verify);
 
-router.post('/profile',joi.userValidate,userController.profile);
-
 module.exports = router;
