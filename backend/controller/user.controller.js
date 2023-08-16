@@ -55,20 +55,11 @@ const verify = async (req, res) => {
             },
         });
 
-        console.log(contact);
-
         if (!contact || currentTime > contact.expiredAt) {
             return res.status(422).json({ message: "OTP Has Expired" });
         } else {
-            const userId = Math.floor(10000000 + Math.random() * 90000000);
-            const phoneNumber = encrypt(String(req.body.phoneNumber));
-            const name = req.body.name;
-            const age = req.body.age;
-            const email = encrypt(String(req.body.email));
-            const signUpDate = new Date();
-            const loginDate = dateTime.format(new Date(), "YYYY-MM-DD HH:mm:ss");
             const userExists = await User.findOne({ where: { phoneNumber } });
-
+            console.log(userExists);
             if (userExists) {
                 return res.json({
                     message: "Success",
@@ -79,19 +70,11 @@ const verify = async (req, res) => {
                         email: decrypt(userExists.email),
                     },
                 });
-            } else {
-                const user = await User.create({
-                    phoneNumber,
-                    userId,
-                    name,
-                    age,
-                    email,
-                    signUpDate,
-                    loginDate,
-                });
+            }
+            else{
                 return res.json({
-                    message: "Success",
-                });
+                    message:"success"                
+                })
             }
         }
     } catch (error) {
@@ -100,4 +83,24 @@ const verify = async (req, res) => {
     }
 };
 
-module.exports = {signUp,verify}
+const profile = async (req,res) =>{
+    const userId = Math.floor(10000000 + Math.random() * 90000000);
+    const phoneNumber = encrypt(String(req.body.phoneNumber));
+    const name = req.body.name;
+    const age = req.body.age;
+    const email = encrypt(String(req.body.email));
+    const signUpDate = new Date();
+    const loginDate = dateTime.format(new Date(), "YYYY-MM-DD HH:mm:ss");
+    const user = await User.create({
+        userId,
+        phoneNumber,
+        name,
+        age,
+        email,
+        signUpDate,
+        loginDate
+    })
+    return res.json({message:"success"})
+}
+
+module.exports = {signUp,verify,profile}

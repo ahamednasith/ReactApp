@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Login({ phoneNumber }) {
-    const [otp, setOtp] = useState('');
+function Login({ phoneNumber,otp,setOtp }) {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,6 +21,7 @@ function Login({ phoneNumber }) {
 
                 const authenticated = true;
                 if (authenticated) {
+                    setOtp(otp);
                     navigate('/profile');
                 } else {
                     navigate('/home');

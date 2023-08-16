@@ -10,15 +10,16 @@ import Profile from "./component/Profile";
 
 function App() {
   const [phoneNumber,setPhoneNumber] = useState('');
+  const [otp,setOtp] = useState('');
   return (
     <BrowserRouter>
     <div>
     <Routes>
       <Route path="/" element={<Button/>}></Route>
       <Route path='/signup' element={<Signup phoneNumber={phoneNumber} setPhoneNumber={setPhoneNumber}/>}></Route>
-      <Route path="/login" element={<Login phoneNumber={phoneNumber}/>}></Route>
-      <Route path="/home" element={<Home phoneNumber={phoneNumber}/>}></Route>
-      <Route path="/profile" element={<Profile phoneNumber={phoneNumber}/>}></Route>
+      <Route path="/login" element={<Login phoneNumber={phoneNumber} otp={otp} setOtp={setOtp} />}></Route>
+      <Route path="/home" element={<Home phoneNumber={phoneNumber} />}></Route>
+      <Route path="/profile" element={<Profile phoneNumber={phoneNumber} otp={otp} />}></Route>
     </Routes>
     <ToastContainer position="top-center" type="info" theme="colored"/>{/* Add ToastContainer here*/}
     </div>

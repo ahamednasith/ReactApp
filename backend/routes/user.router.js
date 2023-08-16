@@ -7,6 +7,8 @@ const jwt = require('../utils/cryptAndJwt');
 
 router.post('/signup',joi.phoneValidate,userController.signUp);
 
-router.post('/verify',joi.contactValidate,userController.verify);
+router.post('/verify',userController.verify);
+
+router.post('/profile',joi.contactValidate,userController.profile);
 
 module.exports = router;
