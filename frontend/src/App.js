@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Signup from "./component/Signup";
 import Login from "./component/Login";
 import Home from "./component/Home";
-import Verify from "./component/Profile";
+import Profile from "./component/Profile";
 
 function App() {
   const [phoneNumber,setPhoneNumber] = useState('');
@@ -16,7 +16,7 @@ function App() {
       <Route path='/' element={<Signup phoneNumber={phoneNumber} setPhoneNumber={setPhoneNumber}/>}></Route>
       <Route path="/login" element={<Login phoneNumber={phoneNumber}/>}></Route>
       <Route path="/home" element={<Home phoneNumber={phoneNumber}/>}></Route>
-      <Route path="/verify" element={<Verify phoneNumber={phoneNumber}/>}></Route>
+      <Route path="/profile" element={<Profile phoneNumber={phoneNumber}/>}></Route>
     </Routes>
     <ToastContainer position="top-center" type="info" theme="colored"/>{/* Add ToastContainer here*/}
     </div>

@@ -25,7 +25,7 @@ function Home({phoneNumber}) {
         e.preventDefault();
         const isValid = await validateForm();
         if(isValid){
-            axios.post('http://localhost:6733/profile',{phoneNumber,name,age,email})
+            axios.post('http://localhost:6733/verify',{phoneNumber,name,age,email})
             .then(res=>{
                 if(res.data){
                     toast.success("Profile Enter Successfully",{position:'top-center'})
