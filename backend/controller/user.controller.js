@@ -61,19 +61,21 @@ const verify = async (req, res) => {
             const userExists = await User.findOne({ where: { phoneNumber } });
             console.log(userExists);
             if (userExists) {
-                return res.json({
+                return res.send({
+                    profile:"true",
                     message: "Success",
                     data: {
                         userId: userExists.userId,
+                        phoneNumber:decrypt(userExists.phoneNumber),
                         name: userExists.name,
                         age: userExists.age,
                         email: decrypt(userExists.email),
                     },
-                });
+            });
             }
             else{
                 return res.json({
-                    message:"success"                
+                    message:"success",               
                 })
             }
         }
@@ -83,24 +85,30 @@ const verify = async (req, res) => {
     }
 };
 
-const profile = async (req,res) =>{
-    const userId = Math.floor(10000000 + Math.random() * 90000000);
-    const phoneNumber = encrypt(String(req.body.phoneNumber));
-    const name = req.body.name;
-    const age = req.body.age;
-    const email = encrypt(String(req.body.email));
-    const signUpDate = new Date();
-    const loginDate = dateTime.format(new Date(), "YYYY-MM-DD HH:mm:ss");
-    const user = await User.create({
-        userId,
-        phoneNumber,
-        name,
-        age,
-        email,
-        signUpDate,
-        loginDate
-    })
-    return res.json({message:"success"})
-}
+const profile = async (req, res) => {
+    try {
+        const userId = Math.floor(10000000 + Math.random() * 90000000);
+        const phoneNumber = encrypt(String(req.body.phoneNumber));
+        const name = req.body.name;
+        const age = req.body.age;
+        const email = encrypt(String(req.body.email));
+        const signUpDate = new Date();
+        const loginDate = dateTime.format(new Date(), "YYYY-MM-DD HH:mm:ss");
+        const user = await User.create({
+            userId,
+            phoneNumber,
+            name,
+            age,
+            email,
+            signUpDate,
+            loginDate
+        });
+
+        return res.json({ profile:true,message: "success", data:{ userId, phoneNumber,name,age,email} });
+    } catch (error) {
+        console.error('An error occurred while creating the user:', error);
+        return res.status(500).json({ message: "An error occurred. Please try again later." });
+    }
+};
 
 module.exports = {signUp,verify,profile}

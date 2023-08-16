@@ -18,18 +18,19 @@ function Login({ phoneNumber,otp,setOtp }) {
             const response = await axios.post('http://localhost:6733/verify', { phoneNumber, otp });
             if (response.data) {
                 toast.success("OTP Verified Successfully", { position: 'top-center' });
-
-                const authenticated = true;
-                if (authenticated) {
+                if (response.data.profile) {
                     setOtp(otp);
                     navigate('/profile');
-                } else {
-                    navigate('/home');
+                }
+                else{
+                    setOtp(otp);
+                    navigate('/home')
                 }
             } else {
                 toast.error("OTP Has Expired", { position: 'top-center' });
-            }
-        } catch (error) {
+            } 
+        }
+        catch (error) {
             console.error("An error occurred:", error);
             toast.error("OTP Is Invalid", { position: 'top-center' });
         }
@@ -56,5 +57,6 @@ function Login({ phoneNumber,otp,setOtp }) {
         </div>
     )
 }
+
 
 export default Login;
