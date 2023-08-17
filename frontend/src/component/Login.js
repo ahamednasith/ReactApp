@@ -33,6 +33,7 @@ function Login({ phoneNumber,otp,setOtp }) {
         if (otp.length === 6) {
             verifyOTP();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[otp]);
 
     return (

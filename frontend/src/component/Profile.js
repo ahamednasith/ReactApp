@@ -14,9 +14,7 @@ function Profile({ phoneNumber, otp }) {
 
             if (response.data) {
                 setUser(response.data);
-                toast.success("Welcome Back")
                 localStorage.setItem('userData', JSON.stringify(response.data));
-                toast.success("Welcome Back")
             } else {
                 toast.error(response.message);
             }
