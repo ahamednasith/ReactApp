@@ -6,13 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Login({ phoneNumber,otp,setOtp }) {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (otp.length === 6) {
-            verifyOTP();
-        }
-    },);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const verifyOTP = async () => {
         try {
             const response = await axios.post('http://localhost:6733/verify', { phoneNumber, otp });
@@ -35,6 +29,11 @@ function Login({ phoneNumber,otp,setOtp }) {
             toast.error("OTP Is Invalid", { position: 'top-center' });
         }
     }
+    useEffect(() => {
+        if (otp.length === 6) {
+            verifyOTP();
+        }
+    },[otp]);
 
     return (
         <div className="d-flex bg-dark justify-content-center align-items-center vh-100">
