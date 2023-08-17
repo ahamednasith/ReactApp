@@ -37,7 +37,7 @@ function Profile({ phoneNumber, otp }) {
                         <p><b>Phone Number:</b> {user.data.phoneNumber}</p>
                         <p><b>Name:</b> {user.data.name}</p>
                         <p><b>Age: </b>{user.data.age}</p>
-                        <p><b>Email: </b> {user.data.email}</p> {/* Corrected the label here */}
+                        <p><b>Email: </b> {user.data.email}</p>
                     </div>
                 )}
             </div>
