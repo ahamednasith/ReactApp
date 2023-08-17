@@ -45,7 +45,7 @@ function Login({ phoneNumber,otp,setOtp }) {
                     <label htmlFor='otp' className="text-dark"><strong>OTP:</strong></label>
                     <input
                         type='text'
-                        name='otp'
+                        id="otp"
                         placeholder="Enter Your OTP"
                         value={otp}
                         onChange={(e) => setOtp(e.target.value)}

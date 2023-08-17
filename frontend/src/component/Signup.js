@@ -46,7 +46,7 @@ function Signup({ phoneNumber, setPhoneNumber }) {
                 <form action="" onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor='phoneNumber' className="text-dark"><strong>Phone Number:</strong></label>
-                        <input type='text' name='phoneNumber' placeholder="Enter Your Phone Number" onChange={(e) => setPhoneNumber(e.target.value)} className="form-control rounded"/>
+                        <input type='text' id='phoneNumber'  placeholder="Enter Your Phone Number" onChange={(e) => setPhoneNumber(e.target.value)} className="form-control rounded"/>
                         <br></br>
                     </div>
                     <button type="submit" className="btn btn-primary border-dark rounded-3 w-100">Send OTP</button>

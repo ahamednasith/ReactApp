@@ -59,15 +59,15 @@ function Home({ phoneNumber, otp }) {
                 <form action="" onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="name" className="text-success"><strong>Name:</strong></label>
-                        <input type="text" name="name" placeholder="Enter Your Name" onChange={(e)=>setName(e.target.value)} className="form-control rounded-3"></input>
+                        <input type="text" id="name"  placeholder="Enter Your Name" onChange={(e)=>setName(e.target.value)} className="form-control rounded-3"></input>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="age" className="text-danger"><strong>Age:</strong></label>
-                        <input type="number" name="phoneNumber" placeholder="Enter Your Age" onChange={(e)=>setAge(e.target.value)} className="form-control rounded-3"></input>
+                        <input type="number" id="age" placeholder="Enter Your Age" onChange={(e)=>setAge(e.target.value)} className="form-control rounded-3"></input>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="email" className="text-info"><strong>Email:</strong></label>
-                        <input type="email" name="email" placeholder="Enter Your Email" onChange={(e)=>setEmail(e.target.value)} className="form-control rounded-3"></input>
+                        <input type="email" id="email"  placeholder="Enter Your Email" onChange={(e)=>setEmail(e.target.value)} className="form-control rounded-3"></input>
                     </div>
                     <button type='submit' className="btn btn-primary text-warning border-dark rounded-3 w-100"><strong>Submit</strong></button>
                 </form>

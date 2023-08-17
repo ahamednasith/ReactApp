@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,24 +21,32 @@ function Profile({ phoneNumber, otp }) {
             toast.error("An error occurred: " + error.message);
         }
     }
+
+    useEffect(()=>{
+        handleGetUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
+
     return (
         <div className="d-flex bg-dark justify-content-center align-items-center vh-100">
             <div className="bg-primary p-5 text-white rounded-4 w-25 ">
                 <h1 className='text-dark'><strong><center>INFORMATION</center></strong></h1><br/>
                 {user && (
                     <div className='text-white font-weight'>
-                        <p><b>User ID:</b> {user.userId}</p>
-                        <p><b>Phone Number:</b> {user.phoneNumber}</p>
-                        <p><b>Name:</b> {user.name}</p>
-                        <p><b>Age: </b>{user.age}</p>
-                        <p><b>Age: </b> {user.email}</p>
+                        <p><b>User ID:</b> {user.data.userId}</p>
+                        <p><b>Phone Number:</b> {user.data.phoneNumber}</p>
+                        <p><b>Name:</b> {user.data.name}</p>
+                        <p><b>Age: </b>{user.data.age}</p>
+                        <p><b>Email: </b> {user.data.email}</p> {/* Corrected the label here */}
                     </div>
                 )}
-                <button className="btn btn-info border-dark rounded-3 w-100" onClick={handleGetUser}>Get User Info</button>
             </div>
         </div>
-    )
+    );
 }
 
-export default Profile
+export default Profile;
+
+
+
 

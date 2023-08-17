@@ -35,7 +35,6 @@ const signUp = async (req, res) => {
             return res.json({message: "Success" });
         }
     } catch (error) {
-        console.error("Error in signUp:", error);
         return res.json({ message: "Internal Server Error" });
     }
 };
@@ -59,7 +58,6 @@ const verify = async (req, res) => {
             return res.status(422).json({ message: "OTP Has Expired" });
         } else {
             const userExists = await User.findOne({ where: { phoneNumber } });
-            console.log(userExists);
             if (userExists) {
                 return res.send({
                     profile:"true",
@@ -80,7 +78,6 @@ const verify = async (req, res) => {
             }
         }
     } catch (error) {
-        console.error("Error in verify:", error);
         return res.json({ message: "Internal Server Error" });
     }
 };
@@ -104,9 +101,8 @@ const profile = async (req, res) => {
             loginDate
         });
 
-        return res.json({ profile:true,message: "success", data:{ userId, phoneNumber,name,age,email} });
+        return res.json({ profile:true,message: "success", data:{ userId, phoneNumber:decrypt(phoneNumber),name,age,email:decrypt(email)} });
     } catch (error) {
-        console.error('An error occurred while creating the user:', error);
         return res.status(500).json({ message: "An error occurred. Please try again later." });
     }
 };
