@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -9,6 +9,16 @@ function Home({ phoneNumber, otp }) {
     const [email, setEmail] = useState('');
 
     const navigate = useNavigate();
+    useEffect(() => {
+        const storedUserData = localStorage.getItem('userData');
+        if (storedUserData) {
+            const userData = JSON.parse(storedUserData);
+            console.log(userData)
+            setName(userData.data.name);
+            setAge(userData.data.age);
+            setEmail(userData.data.email);
+        }
+    }, [phoneNumber,otp]);
     const validateForm = async () => {
         if (!name) {
             toast.error('Name is Required');
@@ -59,15 +69,15 @@ function Home({ phoneNumber, otp }) {
                 <form action="" onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="name" className="text-success"><strong>Name:</strong></label>
-                        <input type="text" id="name"  placeholder="Enter Your Name" onChange={(e)=>setName(e.target.value)} className="form-control rounded-3"></input>
+                        <input type="text" id="name" value={name} placeholder='Enter Your Name' onChange={(e)=>setName(e.target.value)} className="form-control rounded-3" autoComplete="name"></input>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="age" className="text-danger"><strong>Age:</strong></label>
-                        <input type="number" id="age" placeholder="Enter Your Age" onChange={(e)=>setAge(e.target.value)} className="form-control rounded-3"></input>
+                        <input type="number" id="age" value={age} placeholder="Enter Your Age" onChange={(e)=>setAge(e.target.value)} className="form-control rounded-3" autoComplete="age"></input>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="email" className="text-info"><strong>Email:</strong></label>
-                        <input type="email" id="email"  placeholder="Enter Your Email" onChange={(e)=>setEmail(e.target.value)} className="form-control rounded-3"></input>
+                        <input type="email" id="email" value={email} placeholder="Enter Your Email" onChange={(e)=>setEmail(e.target.value)} className="form-control rounded-3" autoComplete="email"></input>
                     </div>
                     <button type='submit' className="btn btn-primary text-warning border-dark rounded-3 w-100"><strong>Submit</strong></button>
                 </form>

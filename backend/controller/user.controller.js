@@ -90,20 +90,30 @@ const profile = async (req, res) => {
         const age = req.body.age;
         const email = encrypt(String(req.body.email));
         const signUpDate = new Date();
-        const loginDate = dateTime.format(new Date(), "YYYY-MM-DD HH:mm:ss");
-        const user = await User.create({
-            userId,
-            phoneNumber,
-            name,
-            age,
-            email,
-            signUpDate,
-            loginDate
-        });
-
-        return res.json({ profile:true,message: "success", data:{ userId, phoneNumber:decrypt(phoneNumber),name,age,email:decrypt(email)} });
+        const loginDate = new Date();
+        const userExists = await User.findOne({where:{phoneNumber}})
+        if(userExists){
+            const user = await User.update({
+                name,age,email,loginDate
+            },{where:{phoneNumber}})
+            return res.json({ profile:true,message: "success", data:{ userId, phoneNumber:decrypt(phoneNumber),name,age,email:decrypt(email)} });
+        }
+        else{
+            const user = await User.create({
+                userId,
+                phoneNumber,
+                name,
+                age,
+                email,
+                signUpDate,
+                loginDate
+            });
+    
+            return res.json({ profile:true,message: "success", data:{ userId, phoneNumber:decrypt(phoneNumber),name,age,email:decrypt(email)} });
+        }
     } catch (error) {
-        return res.status(500).json({ message: "An error occurred. Please try again later." });
+        console.log(error);
+        return res.status(500).json({ message: "An error occurred. Please try again later.",error })
     }
 };
 
