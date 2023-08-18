@@ -7,6 +7,7 @@ import Signup from "./component/Signup";
 import Login from "./component/Login";
 import Home from "./component/Home";
 import Profile from "./component/Profile";
+import Update from "./component/Update";
 
 function App() {
   const [phoneNumber,setPhoneNumber] = useState('');
@@ -20,6 +21,7 @@ function App() {
       <Route path="/login" element={<Login phoneNumber={phoneNumber} otp={otp} setOtp={setOtp} />}></Route>
       <Route path="/home" element={<Home phoneNumber={phoneNumber} />}></Route>
       <Route path="/profile" element={<Profile phoneNumber={phoneNumber} otp={otp} />}></Route>
+      <Route path="/update" element={<Update phoneNumber={phoneNumber} />}></Route>
     </Routes>
     <ToastContainer position="top-center" type="info" theme="colored"/>{/* Add ToastContainer here*/}
     </div>

@@ -22,17 +22,11 @@ function Profile({ phoneNumber, otp }) {
             toast.error("An error occurred: " + error.message);
         }
     }
-
-    useEffect(() => {
-        const storedUserData = localStorage.getItem('userData');
-        console.log(storedUserData);
-        if (storedUserData) {
-            setUser(JSON.parse(storedUserData));
-        } else {
-            handleGetUser();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    
+    useEffect(()=>{
+        handleGetUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     return (
         <div className="d-flex bg-dark justify-content-center align-items-center vh-100">
@@ -57,7 +51,3 @@ function Profile({ phoneNumber, otp }) {
 }
 
 export default Profile;
-
-
-
-

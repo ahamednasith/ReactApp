@@ -1,8 +1,8 @@
 const db = require('../models/index');
-const { Sequelize,Op } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const dateTime = require('date-and-time');
-const {encrypt,decrypt,generateToken} = require('../utils/cryptAndJwt');
-const {removeOtp} = require('../utils/cron');
+const { encrypt, decrypt, generateToken } = require('../utils/cryptAndJwt');
+const { removeOtp } = require('../utils/cron');
 const { use } = require('../routes/user.router');
 const Contact = db.contact;
 const User = db.user;
@@ -32,7 +32,7 @@ const signUp = async (req, res) => {
                 createdAt,
                 expiredAt,
             });
-            return res.json({message: "Success" });
+            return res.json({ message: "Success" });
         }
     } catch (error) {
         return res.json({ message: "Internal Server Error" });
@@ -60,20 +60,20 @@ const verify = async (req, res) => {
             const userExists = await User.findOne({ where: { phoneNumber } });
             if (userExists) {
                 return res.send({
-                    profile:"true",
+                    profile: "true",
                     message: "Success",
                     data: {
                         userId: userExists.userId,
-                        phoneNumber:decrypt(userExists.phoneNumber),
+                        phoneNumber: decrypt(userExists.phoneNumber),
                         name: userExists.name,
                         age: userExists.age,
                         email: decrypt(userExists.email),
                     },
-            });
+                });
             }
-            else{
+            else {
                 return res.json({
-                    message:"success",               
+                    message: "success",
                 })
             }
         }
@@ -91,14 +91,13 @@ const profile = async (req, res) => {
         const email = encrypt(String(req.body.email));
         const signUpDate = new Date();
         const loginDate = new Date();
-        const userExists = await User.findOne({where:{phoneNumber}})
+        const userExists = await User.findOne({where:{phoneNumber}});
         if(userExists){
             const user = await User.update({
-                name,age,email,loginDate
+                name,age,email
             },{where:{phoneNumber}})
-            return res.json({ profile:true,message: "success", data:{ userId, phoneNumber:decrypt(phoneNumber),name,age,email:decrypt(email)} });
-        }
-        else{
+            return res.json({ profile: true, message: "success", data: { userId, phoneNumber: decrypt(phoneNumber), name, age, email: decrypt(email) } });
+        } else {
             const user = await User.create({
                 userId,
                 phoneNumber,
@@ -108,13 +107,13 @@ const profile = async (req, res) => {
                 signUpDate,
                 loginDate
             });
-    
-            return res.json({ profile:true,message: "success", data:{ userId, phoneNumber:decrypt(phoneNumber),name,age,email:decrypt(email)} });
+            return res.json({ profile: true, message: "success", data: { userId, phoneNumber: decrypt(phoneNumber), name, age, email: decrypt(email) } });
         }
+
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "An error occurred. Please try again later.",error })
+        return res.status(500).json({ message: "An error occurred. Please try again later.", error })
     }
 };
 
-module.exports = {signUp,verify,profile}
+module.exports = { signUp, verify, profile }
