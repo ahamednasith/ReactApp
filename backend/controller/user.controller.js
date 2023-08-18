@@ -116,4 +116,21 @@ const profile = async (req, res) => {
     }
 };
 
-module.exports = { signUp, verify, profile }
+const getProfile = async(req,res) => {
+    try{
+        const phoneNumber = encrypt(String(req.body.phoneNumber));
+        const user = await User.findOne({
+            where:{
+                phoneNumber
+            }
+        });
+        if(user){
+            return res.json({profile:true,message:"success",data:{ userId:user.userId, phoneNumber: decrypt(user.phoneNumber), name:user.name, age:user.age, email: decrypt(user.email) }})
+        }   
+     } catch(error) {
+        console.log(error)
+        return res.json({message:"An Error",error})
+    }
+}
+
+module.exports = { signUp, verify, profile, getProfile }

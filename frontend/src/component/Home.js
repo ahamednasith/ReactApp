@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState , useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -9,16 +9,6 @@ function Home({ phoneNumber, otp }) {
     const [email, setEmail] = useState('');
 
     const navigate = useNavigate();
-    useEffect(() => {
-        const storedUserData = localStorage.getItem('userData');
-        if (storedUserData) {
-            const userData = JSON.parse(storedUserData);
-            console.log(userData)
-            setName(userData.data.name);
-            setAge(userData.data.age);
-            setEmail(userData.data.email);
-        }
-    }, [phoneNumber,otp]);
     const validateForm = async () => {
         if (!name) {
             toast.error('Name is Required');
@@ -69,7 +59,7 @@ function Home({ phoneNumber, otp }) {
                 <form action="" onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="name" className="text-success"><strong>Name:</strong></label>
-                        <input type="text" id="name" value={name} placeholder='Enter Your Name' onChange={(e)=>setName(e.target.value)} className="form-control rounded-3" autoComplete="name"></input>
+                        <input type="text" id="name" value={name}  placeholder='Enter Your Name' onChange={(e)=>setName(e.target.value)} className="form-control rounded-3" autoComplete="name"></input>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="age" className="text-danger"><strong>Age:</strong></label>

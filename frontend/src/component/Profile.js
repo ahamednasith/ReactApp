@@ -4,8 +4,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+
 function Profile({ phoneNumber, otp }) {
-    const [user, setUser] = useState('');
+    const [user, setUser] = useState(null);
 
     const handleGetUser = async () => {
         try {
@@ -32,7 +33,7 @@ function Profile({ phoneNumber, otp }) {
         <div className="d-flex bg-dark justify-content-center align-items-center vh-100">
             <div className="bg-primary p-5 text-white rounded-4 w-25 ">
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Link to="/home" className='btn btn-lg btn-info text-dark'><b>Edit</b></Link>
+                    <Link to="/update" className='btn btn-lg btn-info text-dark'><b>Edit</b></Link>
                 </div>
                 <h1 className='text-dark'><strong><center>INFORMATION</center></strong></h1><br />
                 {user && (
