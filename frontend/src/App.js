@@ -20,7 +20,7 @@ function App() {
       <Route path='/signup' element={<Signup phoneNumber={phoneNumber} setPhoneNumber={setPhoneNumber}/>}></Route>
       <Route path="/login" element={<Login phoneNumber={phoneNumber} otp={otp} setOtp={setOtp} />}></Route>
       <Route path="/home" element={<Home phoneNumber={phoneNumber} />}></Route>
-      <Route path="/profile" element={<Profile phoneNumber={phoneNumber} otp={otp} />}></Route>
+      <Route path="/profile" element={<Profile phoneNumber={phoneNumber} setPhoneNumber={setPhoneNumber} otp={otp} setOtp={setOtp}/>}></Route>
       <Route path="/update" element={<Update phoneNumber={phoneNumber} />}></Route>
     </Routes>
     <ToastContainer position="top-center" type="info" theme="colored"/>{/* Add ToastContainer here*/}

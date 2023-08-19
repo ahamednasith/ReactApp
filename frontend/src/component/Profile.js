@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 
-function Profile({ phoneNumber, otp }) {
+function Profile({ phoneNumber,setPhoneNumber, otp,setOtp}) {
     const [user, setUser] = useState(null);
 
     const handleGetUser = async () => {
@@ -29,6 +29,16 @@ function Profile({ phoneNumber, otp }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
+    const handleLogout = () => {
+        try{
+            setPhoneNumber("");
+            setOtp("");
+            localStorage.clear()
+        }catch(error){
+            console.error("An error occurred: " + error.message);
+        }
+      };
+
     return (
         <div className="d-flex bg-dark justify-content-center align-items-center vh-100">
             <div className="bg-primary p-5 text-white rounded-4 w-25 ">
@@ -45,7 +55,7 @@ function Profile({ phoneNumber, otp }) {
                         <p><b>Email: </b> <b className='text-warning'>{user.data.email}</b></p>
                     </div>
                 )}
-                <Link to='/signup' className="btn btn-danger text-dark text-weight-bold border-dark rounded-3 w-100">Log Out</Link>
+                <Link to='/signup' onClick={handleLogout} className="btn btn-danger text-dark text-weight-bold border-dark rounded-3 w-100">Log Out</Link>
             </div>
         </div>
     );
