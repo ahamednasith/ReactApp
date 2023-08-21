@@ -11,7 +11,6 @@ function Profile({phoneNumber,otp}) {
         const fetchProfile = async () => {
           try {
             const token =localStorage.getItem('accessToken')
-            console.log(token)
             const response = await axios.get('http://localhost:6733/getprofile', {
               headers: {
                 Authorization: `bearer ${token}`,
@@ -21,11 +20,10 @@ function Profile({phoneNumber,otp}) {
                 otp:otp
               }
             });
-            console.log(response)
             setUser(response.data);
             toast.success("Welcome Back")
           } catch (error) {
-            console.error('Error fetching profile:', error.message);
+            toast.error('Error fetching profile:', error.message);
           }
         };
     

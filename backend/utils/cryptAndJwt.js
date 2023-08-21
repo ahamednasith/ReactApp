@@ -17,7 +17,6 @@ const verifyToken = async(req,res,next) => {
         const decodedToken = jwt.decode(token);
         const userId = decodedToken.userId;
         const user = await User.findOne({where:{userId:userId}});
-        console.log(user)
         if(user){
             const date = user.loginDate;
             const loginDate = moment(date).format('YYYY-MM-DD HH:mm:ss');

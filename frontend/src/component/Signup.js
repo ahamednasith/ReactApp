@@ -33,7 +33,6 @@ function Signup({ phoneNumber, setPhoneNumber }) {
                 }
             }
         } catch (error) {
-            console.error('An error occurred:', error);
             toast.error('OTP Not genretaed', { position: 'top-center', theme: 'light' });
             
         }

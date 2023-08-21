@@ -111,7 +111,6 @@ const profile = async (req, res) => {
         const token = generateToken(userId,loginDate);
         return res.json({ profile: true, message: "success",token:token, data: { userId, phoneNumber: decrypt(phoneNumber), name, age, email: decrypt(email) } });
     } catch (error) {
-        console.log(error);
         return res.status(500).json({ message: "An error occurred. Please try again later.", error })
     }
 };
@@ -123,7 +122,6 @@ const getProfile = async (req, res) => {
             return res.json({ profile: true, message: "success", data: { userId: req.user.userId, phoneNumber: decrypt(req.user.phoneNumber), name: req.user.name, age: req.user.age, email: decrypt(req.user.email) } })
         }
     } catch (error) {
-        console.log(error)
         return res.json({ message: "An Error", error })
     }
 }

@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Login({ phoneNumber,otp,setOtp }) {
     const navigate = useNavigate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const verifyOTP = async () => {
         try {
             const response = await axios.post('http://localhost:6733/verify', { phoneNumber, otp });
@@ -25,7 +24,6 @@ function Login({ phoneNumber,otp,setOtp }) {
             } 
         }
         catch (error) {
-            console.error("An error occurred:", error);
             toast.error("OTP Is Invalid", { position: 'top-center' });
         }
     }
