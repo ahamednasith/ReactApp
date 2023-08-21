@@ -10,17 +10,17 @@ const generateToken = (userId,loginDate) => {
 };
 
 const verifyToken = async(req,res,next) => {
-    let token = req.headers['Authorization'];
+    let token = req.headers['authorization'];
     if(token){
         tokenPart = token.split(" ");
         token = tokenPart[1];
         const decodedToken = jwt.decode(token);
         const userId = decodedToken.userId;
         const user = await User.findOne({where:{userId:userId}});
+        console.log(user)
         if(user){
             const date = user.loginDate;
             const loginDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
-            console.log(loginDate);
             jwt.verify(token,loginDate,(err) => {
                 if(err){
                     return res.status(402).json({stautscode:402,message:"UnAuthorized",err});
@@ -29,10 +29,10 @@ const verifyToken = async(req,res,next) => {
                 next();
             })
         } else {
-            return res.stauts(404).json({stautscode:404,message:"Token Has Invalid"});
+            return res.status(404).json({stautscode:404,message:"Token Has Invalid"});
         }
     }else {
-        return res.stauts(404).json({statuscode:404,message:"Token Has Invalid"});
+        return res.status(422).json({statuscode:422,message:"Token Has Invalid"});
     }
 };
 

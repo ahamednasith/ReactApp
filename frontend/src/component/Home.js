@@ -37,10 +37,12 @@ function Home({ phoneNumber, otp }) {
                     age,
                     email,
                 });
-
-                console.log(response)
+                console.log(response.data)
                 if (response.data) {
-                    console.log(response.data)
+                    const token = response.data.token; 
+                    console.log(token)
+                    localStorage.setItem('accessToken', token); 
+
                     toast.success('Profile Entered Successfully', { position: 'top-center' });
                     navigate('/profile');
                 } else {

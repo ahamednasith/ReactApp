@@ -1,25 +1,16 @@
 import axios from "axios";
-import React, { useState , useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function Home({ phoneNumber, otp }) {
+function Update({ phoneNumber, otp }) {
     const [name, setName] = useState('');
     const [age, setAge] = useState('');
     const [email, setEmail] = useState('');
+    const userId = useState('');
+    const loginDate = useState('');
 
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const storedUserData = localStorage.getItem('userData');
-        if (storedUserData) {
-            const userData = JSON.parse(storedUserData);
-            console.log(userData)
-            setName(userData.data.name || '');
-            setAge(userData.data.age || '');
-            setEmail(userData.data.email || '');
-        }
-    }, [phoneNumber,otp]);
     const validateForm = async () => {
         if (!name) {
             toast.error('Name is Required');
@@ -44,14 +35,19 @@ function Home({ phoneNumber, otp }) {
                 const response = await axios.post('http://localhost:6733/profile', {
                     phoneNumber,
                     otp,
+                    userId,
                     name,
                     age,
                     email,
+                    loginDate
                 });
 
-                console.log(response)
+                console.log(response.data)
                 if (response.data) {
-                    console.log(response.data)
+                    const token = response.data.token; 
+                    console.log(token)
+                    localStorage.setItem('accessToken', token); 
+
                     toast.success('Profile Entered Successfully', { position: 'top-center' });
                     navigate('/profile');
                 } else {
@@ -87,4 +83,4 @@ function Home({ phoneNumber, otp }) {
     )
 }
 
-export default Home
+export default Update

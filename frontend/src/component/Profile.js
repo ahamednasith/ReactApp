@@ -4,40 +4,33 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+function Profile({phoneNumber,otp}) {
+    const [user, setUser] = useState('');
 
-function Profile({ phoneNumber,setPhoneNumber, otp,setOtp}) {
-    const [user, setUser] = useState(null);
-
-    const handleGetUser = async () => {
-        try {
-            const response = await axios.post('http://localhost:6733/verify', { phoneNumber, otp });
-            console.log(response.data)
-
-            if (response.data) {
-                setUser(response.data);
-                localStorage.setItem('userData', JSON.stringify(response.data));
-            } else {
-                toast.error(response.message);
-            }
-        } catch (error) {
-            toast.error("An error occurred: " + error.message);
-        }
-    }
+    useEffect(() => {
+        const fetchProfile = async () => {
+          try {
+            const token =localStorage.getItem('accessToken')
+            console.log(token)
+            const response = await axios.get('http://localhost:6733/getprofile', {
+              headers: {
+                Authorization: `bearer ${token}`,
+              },
+              params:{
+                phoneNumber:phoneNumber,
+                otp:otp
+              }
+            });
+            console.log(response)
+            setUser(response.data);
+            toast.success("Welcome Back")
+          } catch (error) {
+            console.error('Error fetching profile:', error.message);
+          }
+        };
     
-    useEffect(()=>{
-        handleGetUser()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
-
-    const handleLogout = () => {
-        try{
-            setPhoneNumber("");
-            setOtp("");
-            localStorage.clear()
-        }catch(error){
-            console.error("An error occurred: " + error.message);
-        }
-      };
+        fetchProfile();
+      }, [phoneNumber,otp]);
 
     return (
         <div className="d-flex bg-dark justify-content-center align-items-center vh-100">
@@ -55,10 +48,11 @@ function Profile({ phoneNumber,setPhoneNumber, otp,setOtp}) {
                         <p><b>Email: </b> <b className='text-warning'>{user.data.email}</b></p>
                     </div>
                 )}
-                <Link to='/signup' onClick={handleLogout} className="btn btn-danger text-dark text-weight-bold border-dark rounded-3 w-100">Log Out</Link>
+                <Link to='/signup' className="btn btn-danger text-dark text-weight-bold border-dark rounded-3 w-100">Log Out</Link>
             </div>
         </div>
     );
+
 }
 
-export default Profile;
+export default Profile

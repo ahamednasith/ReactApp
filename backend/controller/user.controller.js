@@ -3,7 +3,6 @@ const { Sequelize, Op } = require('sequelize');
 const dateTime = require('date-and-time');
 const { encrypt, decrypt, generateToken } = require('../utils/cryptAndJwt');
 const { removeOtp } = require('../utils/cron');
-const { use } = require('../routes/user.router');
 const Contact = db.contact;
 const User = db.user;
 
@@ -90,13 +89,14 @@ const profile = async (req, res) => {
         const age = req.body.age;
         const email = encrypt(String(req.body.email));
         const signUpDate = new Date();
-        const loginDate = new Date();
-        const userExists = await User.findOne({where:{phoneNumber}});
-        if(userExists){
+        const loginDate = dateTime.format(new Date(),'YYYY-MM-DD HH:mm:ss');
+        const userExists = await User.findOne({ where: { phoneNumber } });
+        if (userExists) {
             const user = await User.update({
-                name,age,email
-            },{where:{phoneNumber}})
-            return res.json({ profile: true, message: "success", data: { userId, phoneNumber: decrypt(phoneNumber), name, age, email: decrypt(email) } });
+                userId,name, age, email,loginDate
+            }, {
+                where: { phoneNumber }
+            });
         } else {
             const user = await User.create({
                 userId,
@@ -107,29 +107,24 @@ const profile = async (req, res) => {
                 signUpDate,
                 loginDate
             });
-            return res.json({ profile: true, message: "success", data: { userId, phoneNumber: decrypt(phoneNumber), name, age, email: decrypt(email) } });
         }
-
+        const token = generateToken(userId,loginDate);
+        return res.json({ profile: true, message: "success",token:token, data: { userId, phoneNumber: decrypt(phoneNumber), name, age, email: decrypt(email) } });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "An error occurred. Please try again later.", error })
     }
 };
 
-const getProfile = async(req,res) => {
-    try{
-        const phoneNumber = encrypt(String(req.body.phoneNumber));
-        const user = await User.findOne({
-            where:{
-                phoneNumber
-            }
-        });
-        if(user){
-            return res.json({profile:true,message:"success",data:{ userId:user.userId, phoneNumber: decrypt(user.phoneNumber), name:user.name, age:user.age, email: decrypt(user.email) }})
-        }   
-     } catch(error) {
+const getProfile = async (req, res) => {
+    try {
+        const user = await User.findOne({where:{userId:req.user.userId}})
+        if (user) {
+            return res.json({ profile: true, message: "success", data: { userId: req.user.userId, phoneNumber: decrypt(req.user.phoneNumber), name: req.user.name, age: req.user.age, email: decrypt(req.user.email) } })
+        }
+    } catch (error) {
         console.log(error)
-        return res.json({message:"An Error",error})
+        return res.json({ message: "An Error", error })
     }
 }
 

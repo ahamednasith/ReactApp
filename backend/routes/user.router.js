@@ -11,6 +11,6 @@ router.post('/verify',userController.verify);
 
 router.post('/profile',joi.contactValidate,userController.profile);
 
-router.get('/getprofile',joi.phoneValidate,userController.getProfile)
+router.get('/getprofile',jwt.verifyToken,userController.getProfile)
 
 module.exports = router;
